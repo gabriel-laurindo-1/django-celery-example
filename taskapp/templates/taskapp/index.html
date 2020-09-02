@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>YEAH RabbiMQ!</h1>
+    <p>ID Task: {{ id_task }}</p>
+    <p>Status Task: {{ status_task }}</p>  
+    <P>Total Registers: {{ total_registers }}</P>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p}}
+        <input type="submit" value="Executar">
+    </form>
+
+    <table>
+        {% for widget in widget_list %}
+        <tr>
+            <td> {{ widget.name}} </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

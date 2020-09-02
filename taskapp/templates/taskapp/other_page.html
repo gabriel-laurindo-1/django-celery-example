@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Ohter page!</h1>
+    <p>ID Task: {{ id_task }}</p>
+    <p>Status Task {{ status_task }}</p>
+
+    <div>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="executar" id=executar>
+        </form>
+    </div>
+{% endblock %}
