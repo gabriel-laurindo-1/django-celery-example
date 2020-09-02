@@ -1,37 +1,93 @@
-## Welcome to GitHub Pages
+# Django + Celery com brocker RabbitMQ
 
-You can use the [editor on GitHub](https://github.com/gabriel-laurindo-1/django-celery-example/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Exemplo de utilização do Django utilizando celery com o brocker RabbitMQ.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+---
 
-### Markdown
+## Preparação do ambiente virtual
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+---
+Execute a seguinte sequência de comandos no seu terminal de comando.
 
-```markdown
-Syntax highlighted code block
+~~~bash
+# Cria da pasta do virtualenv
+$ virtualenv <nome_ambiente>
 
-# Header 1
-## Header 2
-### Header 3
+# ativação do ambiente virtual
+$ <nome_ambiente>\Scripts\activate
 
-- Bulleted
-- List
+# instalação dos pacotes
+$ pip install -r requirements.txt
+~~~
 
-1. Numbered
-2. List
+---
 
-**Bold** and _Italic_ and `Code` text
+## Instalação do RabbitMQ
 
-[Link](url) and ![Image](src)
-```
+No site oficial do [RabbitMQ](https://www.rabbitmq.com/download.html) você pode encontrar a explicação completa sobre como instalar o RabbitMQ para Windows, MAC e Linux.
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+Porém, para instalar no Windows você percisa somente executar os seguintes passos:
 
-### Jekyll Themes
+- Baixe o RabbitMQ para Windows: [Clique aqui!](https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.8.7/rabbitmq-server-3.8.7.exe)
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/gabriel-laurindo-1/django-celery-example/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+- Baixe o ERLang de acordo com o sistema operacional: [Clique aqui!](https://www.erlang.org/downloads)
 
-### Support or Contact
+- Execute <strong>primeiramente</strong> o instalador do ERLang como adminstrador e siga os passos de instalação normalmente.
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+- Após o fim da instalação do ERLang, instale o RabbitMQ de forma semelhante.
+
+- Ao concluir a instalação do RabbitMQ, execute o programa "RabbitMQ Command Prompt (sbin dir)".
+
+- Dentro do terminal do RabbitMQ Command Prompt (sbin dir), digite os seguintes comandos:
+
+~~~bash
+# Comando 1
+rabbitmq-plugins enable 
+
+# Comando 2
+rabbitmq_management
+~~~
+
+- Em seu navegador de internet, acesse http://localhost:15672/
+
+- Para conectar ao seu painel de gerenciamento do RabbitMQ utilize:
+
+~~~
+Username: guest
+Password: guest
+~~~
+
+---
+
+## Iniciando o Celery
+
+No terminal digite uma das linhas de comando abaixo para iniciar o celery utilizando o eventlet ou o gevent:
+
+~~~bash
+# utiliando eventlet
+$ celery -A <project_name> worker -l info -P eventlet
+
+# utilizando gevent
+$ celery -A <project_name> worker -l info -P gevent 
+~~~
+
+---
+
+## Iniciando o Django
+
+Para executar o projeto no Django, digite o comando abaixo no terminal de seu ambiente virtual.
+
+~~~bash
+# Preparar as migrações necessárias
+$ python manage.py makemigrations
+
+# Executar as migrações
+$ python manage.py migrate
+
+# Iniciar aplicação do Django
+$ python manage.py runserver
+~~~
+
+---
+
+<p align=center> Desenvolvido por <a href="https://github.com/gabriel-laurindo-1" title="Gabriel Laurindo">Gabriel Laurindo</a></p>
